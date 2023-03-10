@@ -1,0 +1,10 @@
+* Goals
+
+- install a extension in firefox
+- mute the ads
+  good to have
+- goal is to skip it
+
+
+* Steps 
+

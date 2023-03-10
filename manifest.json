@@ -1,0 +1,21 @@
+{
+
+  "manifest_version": 2,
+  "name": "Spotify AdBlocker",
+  "version": "1.0",
+
+  "description": "Mute and skips spotify ads",
+
+  "icons": {
+    "48": "icons/border-48.png"
+  },
+
+  "content_scripts": [
+    {
+	"matches": ["*://open.spoify.com/*", "*://*.mozilla.org/*"],
+
+      "js": ["spotify-adblocker-script.js"]
+    }
+  ]
+
+}
