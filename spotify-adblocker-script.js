@@ -2,60 +2,69 @@
 Author : Subham Kumar
 v1.0
 Date : 11 feb 2021 6:14:31 PM
-v1.1.
-
+v2.0
+Date : 15 mar 2023
+- DOM id changed
 */
-  (function(){
 
-      console.log('gravert:adblocker enabled');
-      var volumeButton = ".volume-bar__icon-button";
-      var songEndTime = "playback-bar__progress-time";
+function muteSpotifyAd(){
 
-      function isAd()
-      {
-        song_duration = document.getElementsByClassName(songEndTime)[1].innerText;
-	if (song_duration == undefined) {
-	    alert('song duration component null');
-	    throw new Error('song duration component null');
-	}
-	      
-        [min, sec] = song_duration.split(":")
-        min = Number(min)
-        sec = Number(sec)
-        is_ad = min < 1 && sec < 40
-        return is_ad;
+
+  console.log('gravert:adblocker enabled');
+
+
+  function isAd()
+  {
+    const progressBar = document.querySelector(".playback-bar");
+    const songDuration =  progressBar.childNodes[2].innerText;
+    console.log(`song Time ${songDuration}`);
+
+    if (songDuration == undefined) {
+      alert('song duration component null');
+      throw new Error('song duration component null');
+    }
+    
+    let [min, sec] = songDuration.split(":")
+    min = Number(min)
+    sec = Number(sec)
+    is_ad = min < 1 && sec < 40
+    return is_ad;
+  }
+
+
+  function isMuted()
+  {
+
+    const volumeButton = document.querySelector(".volume-bar__icon-button");
+
+    if (volumeButton == undefined) {
+        alert('volume button empty');
+        throw new Error('volume button empty');
+    }
+
+    return volumeButton.getAttribute("aria-label") != "Mute";
+
+  }
+
+  function muteIfAdUnmuteIfNot()
+  {
+
+      if ( (isAd() && ! isMuted()) || (!isAd()&& isMuted()) ) {
+          console.log("Ads so muting");
+          document.querySelector(volumeButton).click()
+      }
+      else {
+        console.log("no Ads so playing");
       }
 
+  }
 
-      function isMuted()
-      {
+  setInterval(muteIfAdUnmuteIfNot, 1000)
 
-	const volumeButton = document.querySelector(volumeButton);
+}
 
-	if (volumeButton == undefined) {
-	    alert('volume button empty');
-	    throw new Error('volume button empty');
-	}
+setTimeout(muteSpotifyAd, 10000);
 
-        return volumeButton.getAttribute("aria-label") != "Mute";
+console.log('adblocker active');
 
-      }
-
-      function muteIfAdUnmuteIfNot()
-      {
-
-          if ( (isAd() && ! isMuted()) || (!isAd()&& isMuted()) ) {
-	  
-              document.querySelector(volumeButton).click()
-	  }
-
-      }
-
-      setInterval(muteIfAdUnmuteIfNot, 5000)
-
-  })
-
-document.body.style.border = "5px dotted black";
-
-console.log('subham script loaded');
 

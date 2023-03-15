@@ -12,9 +12,9 @@
 
   "content_scripts": [
     {
-	"matches": ["*://open.spoify.com/*", "*://*.mozilla.org/*"],
-
-      "js": ["spotify-adblocker-script.js"]
+	"matches": ["https://*.spotify.com/*"],
+      "js": ["spotify-adblocker-script.js"],
+      "run_at": "document_end"
     }
   ]
 
